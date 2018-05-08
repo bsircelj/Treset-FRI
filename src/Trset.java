@@ -1,4 +1,6 @@
-package PACKAGE_NAME;
-
 public class Trset {
+
+    public static void main(String [] args){
+
+    }
 }

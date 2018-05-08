@@ -1,4 +1,5 @@
-package PACKAGE_NAME;
-
 public class Table {
+    Player player[] = new Player[4];
+
+
 }
