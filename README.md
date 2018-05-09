@@ -1,4 +1,4 @@
-# Trset-FRI
+# Treset-FRI
 
 Card
 - opisi kart
@@ -19,6 +19,6 @@ Player
 
 Rules
 
-Trset
+Treset
 - main class
 UI

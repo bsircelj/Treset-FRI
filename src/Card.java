@@ -15,7 +15,7 @@ public class Card {
     public String toString(){
         String name = "";
         switch(type){
-            case 1: name+="Ace";
+            case 1: name+="Ass";
                 break;
             case 2: name+="2";
                 break;
