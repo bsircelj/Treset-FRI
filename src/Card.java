@@ -3,6 +3,7 @@ public class Card {
 
     private Color color;
     private int type;
+    private int rank; //Moc karte 3 > 2 > R etc... visja stevilka, mocnejsa je
 
     public Card(int type,Color color){
         if(type<1||type>10){
@@ -10,6 +11,8 @@ public class Card {
         }
         this.color=color;
         this.type=type;
+        this.rank = type-4;
+        rank = rank<0 ? rank+10 : rank;
     }
 
     public String toString(){
