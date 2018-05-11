@@ -1,9 +1,9 @@
 public class Card {
     public enum Color{Spade,Bastoni,Coppe,Denari};
 
-    private Color color;
-    private int type;
-    private int rank; //Moc karte 3 > 2 > R etc... visja stevilka, mocnejsa je
+    Color color;
+    int type;
+    int rank; //Moc karte 3 > 2 > R etc... visja stevilka, mocnejsa je
 
     public Card(int type,Color color){
         if(type<1||type>10){
