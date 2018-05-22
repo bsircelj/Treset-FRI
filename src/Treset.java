@@ -10,6 +10,15 @@ public class Treset {
         players.add(new Player(i,(ArrayList<Card>)deck.subList(i*10,(i+1)*10-1),"computer")); //Inicializacija igralcev
     }
 
+    ArrayList<Card> previousRound = new ArrayList<Card>();
+
+    for(int i=0;i<10;i++){
+        ArrayList<Card> onTable = new ArrayList<Card>();
+        for(int j=0;i<4;j++)
+            onTable.add(players.get(j).nextCard(previousRound,onTable));
+
+    }
+
 
     }
 

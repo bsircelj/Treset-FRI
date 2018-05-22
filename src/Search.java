@@ -1,9 +1,10 @@
 public class Search {
 
     Node root;
-
-    public void makeMove(Node move){
-        root=move;
+    int myId;
+    public Search(int myId){
+        this.myId = myId;//Id od igralca, ki izvaja search
     }
+
 
 }
