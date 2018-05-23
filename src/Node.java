@@ -10,7 +10,7 @@ public class Node {
     int player; //Kdo je na vrsti
     int myId;//Id igralca, ki izvaja search. da vemo če izbiramo mi ali kdo drug
     ArrayList<Card> onTable; //Karte igrane od ostalih to potezo
-    Card card; //Karto, ki jo igram v tej potezi
+    Card card; //Karto, ki jo igra kdor je na vrsti v tej potezi
     ArrayList<Card> alreadyPlayed = new ArrayList<Card>();//Vse karte, ki so bile igrane od kogarkoli, bomo rabli za konstruiranje igre do konca
     ArrayList<ArrayList<Card.Color>> missingColor = new ArrayList<>();
 

@@ -2,11 +2,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class HumanPlayer extends Player {
-    public HumanPlayer(int id, ArrayList<Card> hand, String controller) {
-        super(id, hand, controller);
+    public HumanPlayer(int id, ArrayList<Card> hand) {
+        super(id, hand);
     }
 
-    @Override
+
     public Card nextCard(ArrayList<Card> previous,ArrayList<Card> table){
         System.out.println("In your hands are: ");
         int i=0;
@@ -20,7 +20,7 @@ public class HumanPlayer extends Player {
         while(ok){
             try{
                 int choosenCard = sc.nextInt();
-                if(choosenCard<hand.size()&&choosenCard>=0){
+                if(choosenCard<hand.size()&&choosenCard>=0){//@Alex dodaj obvezno barvanje
                     index=choosenCard;
                     ok=false;
                 }else{

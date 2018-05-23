@@ -25,4 +25,11 @@ public class Rules {
         return which;
     }
 
+    public int simulate(Node node, int playerId){
+        int points=0; //0=lost
+
+
+        return points;
+    }
+
 }
