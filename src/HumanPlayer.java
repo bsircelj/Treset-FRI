@@ -8,12 +8,12 @@ public class HumanPlayer extends Player {
 
 
     public Card nextCard(ArrayList<Card> previous,ArrayList<Card> table){
-        System.out.println("In your hands are: ");
+        System.out.print("In your hands are: ");
         int i=0;
         for(Card c:hand){
             System.out.print("[" + i++ + "] " + c + ", ");
         }
-        System.out.println("Write card index to play it:");
+        System.out.print("\nWrite card index to play it:");
         Scanner sc = new Scanner(System.in);
         int index=0;
         boolean ok = true;

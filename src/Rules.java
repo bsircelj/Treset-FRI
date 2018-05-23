@@ -14,7 +14,7 @@ public class Rules {
         return deck;
     }
 
-    public int pickUp(ArrayList<Card> table){//Kdo pobira trenuno rundo
+    public static int pickUp(ArrayList<Card> table){//Kdo pobira trenuno rundo
         int which=0;                         //Vrne indeks zmagovalne karte, glede na vrstni red vhoda, prva karta je vedno prva igrana
         Card.Color firstColor = table.get(0).color;
         for(int i=1;i<4;i++){
@@ -25,11 +25,11 @@ public class Rules {
         return which;
     }
 
-    public int simulate(Node node, int playerId){
+    public static int simulate(Node node, int playerId){
         int points=0; //0=lost
 
 
-        return points;
+        return points;//Simulacija do konca, ko bomo meli narejene node. bomo na random in tudi na "pametno" izbiranje kart
     }
 
 }
