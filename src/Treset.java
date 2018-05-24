@@ -20,8 +20,9 @@ public class Treset {
 
             for(int j=0;j<4;j++) {
                 onTable.add(players.get(order[j]).nextCard(previousRound, onTable));//vsak vrze dol karto
-                printRound(order, onTable);
+                printRound(j, onTable);
             }
+            System.out.println("\nNew turn:");
             //printRound(order,onTable);
             order = changeOrder(order,onTable);//mogoce se dodat malo vec belezenja vsega nekam
             previousRound = onTable;
@@ -43,17 +44,12 @@ public class Treset {
         return newOrder;
     }
 
-    public static void printRound(int[] order, ArrayList<Card> onTable){
-        for (int i = 0; i<order.length; i++) {
-            System.out.print(order[i]);
-            System.out.print("\t");
-            try {
-                System.out.println(onTable.get(i));
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println();
-            }
-        }
-        //print played cards and winner
+    public static void printRound(int playerOnMove, ArrayList<Card> onTable) {
+
+        System.out.print(playerOnMove);
+        System.out.print("\t");
+        System.out.println(onTable.get(playerOnMove));
     }
+
 
 }
