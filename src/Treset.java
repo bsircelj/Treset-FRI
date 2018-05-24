@@ -40,7 +40,7 @@ public class Treset {
         for (int i = lastPicked; i < lastPicked + 4; i++ ) {
             newOrder[i - lastPicked] = i % 4;
         }
-        return newOrder;//@Alex correct order of next round
+        return newOrder;
     }
 
     public static void printRound(int[] order, ArrayList<Card> onTable){
