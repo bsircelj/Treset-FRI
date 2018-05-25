@@ -68,10 +68,28 @@ public class State {
         onTable.add(playedCard);
         if(onTable.size()>3){
             int won = Rules.pickUp(this.onTable);
-
+            order = Rules.changeOrder(order,onTable);
+            currentColor = 'N';
+            playerToMove = order[0];
+            roundWinner[roundNo] = won;
+            roundNo++;
         }else{
             playerToMove=(playerToMove+1)%4;
         }
+    }
+
+    public ArrayList<Card> getMoves(){
+        ArrayList<Card> allMoves = new ArrayList<Card>();
+        if(currentColor=='N'){
+            return playerHands.get(playerToMove);
+        }else{
+            for(Card c:playerHands.get(playerToMove))
+                if(c.color==currentColor)
+                    allMoves.add(c);
+            if(allMoves.size()==0)
+                return playerHands.get(playerToMove);
+        }
+        return allMoves;
     }
 
 }

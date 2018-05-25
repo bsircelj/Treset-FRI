@@ -24,7 +24,7 @@ public class Treset {
             }
             System.out.println("\nNew turn:");
             //printRound(order,onTable);
-            order = changeOrder(order,onTable);//mogoce se dodat malo vec belezenja vsega nekam
+            order = Rules.changeOrder(order,onTable);//mogoce se dodat malo vec belezenja vsega nekam
             previousRound = onTable;
             onTable.clear();
         }
@@ -35,14 +35,7 @@ public class Treset {
     }
 
 
-    public static int[] changeOrder(int [] oldOrder, ArrayList<Card> onTable){
-        int lastPicked = Rules.pickUp(onTable);
-        int[] newOrder = new int[4];
-        for (int i = lastPicked; i < lastPicked + 4; i++ ) {
-            newOrder[i - lastPicked] = i % 4;
-        }
-        return newOrder;
-    }
+
 
     public static void printRound(int playerOnMove, ArrayList<Card> onTable) {
 

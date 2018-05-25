@@ -1,11 +1,9 @@
 public class Card {
-    public enum Color{Spade,Bastoni,Coppe,Denari};
-
-    Color color;
+    char color;// barve S B C D, brez barve null -> 'N'
     int type;
     int rank; //Moc karte 3 > 2 > R etc... visja stevilka, mocnejsa je
 
-    public Card(int type,Color color){
+    public Card(int type,char color){
         if(type<1||type>10){
             throw new java.lang.Error("Type "+type+" is not valid card type");
         }
@@ -18,7 +16,7 @@ public class Card {
     public String toString(){
         String name = "";
         switch(type){
-            case 1: name+="Ace"; // HAHAHAAHHAHAHAHAHAHAHAH Ass .. Si mogoče mislu "Ace"? :P
+            case 1: name+="Asso";
                 break;
             case 2: name+="2";
                 break;
@@ -41,13 +39,13 @@ public class Card {
         }
         name+=" di ";
         switch(this.color){
-            case Spade: name+="Spade";
+            case 'S': name+="Spade";
                 break;
-            case Bastoni: name+="Bastoni";
+            case 'B': name+="Bastoni";
                 break;
-            case Coppe: name+="Coppe";
+            case 'C': name+="Coppe";
                 break;
-            case Denari: name+="Denari";
+            case 'D': name+="Denari";
                 break;
         }
         return name;
