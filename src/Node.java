@@ -35,9 +35,46 @@ public class Node {
     }
 
     public Node UCBSelectChild(ArrayList<Card> legalMoves, double exploration){
+        ArrayList<Node> legalChildren = new ArrayList<Node>();
+        for(Node child:this.childNodes){
+            if(legalMoves.contains(child.move)){
+                legalChildren.add(child);
+            }
+        }
+        double score = 0;
+        Node maxChild = null;
+        for(Node child:legalChildren){
+            double curScore = child.wins/child.visits + exploration*Math.sqrt(Math.log(child.avails)/child.visits);
+            if(curScore>score){
+                score=curScore;
+                maxChild=child;
+            }
+            child.avails++;
+        }
 
+        return maxChild;
+    }
 
-        return null;
+    public Node addChild(Card move, int p){
+        Node n = new Node(move,this,p);
+        this.childNodes.add(n);
+        return n;
+    }
+
+    public void Update(State terminalState){//@Alex
+        //Update this node - increment the visit count by one, and increase the win count by the result of terminalState for self.playerJustMoved.
+    }
+
+    public void treeToString(){//@Alex metode za izpis drevesa, za debugganje
+
+    }
+
+    public void indentString(){
+
+    }
+
+    public void chilrenToString(){
+
     }
 
 
