@@ -84,7 +84,11 @@ public class Node {
         return s;
     }
 
-    public void chilrenToString(){
+    public String chilrenToString(){
+        String s = "";
+        for (int i =0;i < this.childNodes.size(); i++){
+            s += childNodes.get(i).toString() + "\n";
+        }
 
     }
 
