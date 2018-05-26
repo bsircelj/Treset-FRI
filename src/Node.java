@@ -89,7 +89,7 @@ public class Node {
         for (int i =0;i < this.childNodes.size(); i++){
             s += childNodes.get(i).toString() + "\n";
         }
-
+        return s;
     }
 
 
