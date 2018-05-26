@@ -61,16 +61,27 @@ public class Node {
         return n;
     }
 
-    public void Update(State terminalState){//@Alex
+    public void Update(State terminalState){
         //Update this node - increment the visit count by one, and increase the win count by the result of terminalState for self.playerJustMoved.
+        this.visits +=1;
+        this.wins += terminalState.getResult(this.playerJustMoved);
     }
 
-    public void treeToString(){//@Alex metode za izpis drevesa, za debugganje
+    public String treeToString(int indent){
+        String s = this.indentString(indent) + this.toString();
+        for (int i =0;i < this.childNodes.size(); i++){
+            s += childNodes.get(i).treeToString(indent + 1);
+        }
+    return s;
 
     }
 
-    public void indentString(){
-
+    public String indentString(int indent){
+        String s = "\n";
+        for(int i =0; i < indent + 1; i++){
+            s += "| ";
+        }
+        return s;
     }
 
     public void chilrenToString(){
