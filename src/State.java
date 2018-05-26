@@ -92,7 +92,7 @@ public class State {
         return allMoves;
     }
 
-    public int getResults(int player){
+    public int getResult(int player){
 
         return 0;//@Alex dodaj tockovanje, to se klice samo na koncen state. 0 ce smo zgubili cene tocke, player je za koga stejemo tocke
     }
