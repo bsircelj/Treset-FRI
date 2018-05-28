@@ -5,7 +5,7 @@ public class MCPlayer extends Player {
 
     public MCPlayer(int id, ArrayList<Card> hand) {
         super(id, hand);
-        search = new Search(id);
+        search = new Search();
     }
 
     public Card nextCard(ArrayList<Card> previous,ArrayList<Card> table){

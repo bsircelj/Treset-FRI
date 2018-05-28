@@ -10,6 +10,13 @@ public class Node {
     int playerJustMoved; //Kdo je na vrsti
     Card move; //Karto, ki jo igra kdor je na vrsti v tej potezi
 
+    public Node(){//Samo za root node, vedno zacne igralec 0
+        parent=null;
+        move = null;
+        childNodes = new ArrayList<Node>();
+        playerJustMoved = 0;
+    }
+
     public Node(Card move, Node parent, int justMoved){
         this.wins = 0;
         this.visits = 0;
