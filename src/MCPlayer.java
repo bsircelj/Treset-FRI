@@ -29,8 +29,13 @@ public class MCPlayer extends Player {
             State state = rootstate.cloneAndRandomize();
 
             //Select
-            while(!state.getMoves().isEmpty()&&node.getUntriedMoves(state.getMoves()).isEmpty()){//optimizacija: samo 1x se klice getMoves
-                node = node.UCBSelectChild(state.getMoves());
+            while(true){
+                ArrayList<Card> possibleMoves = state.getMoves();
+                ArrayList<Card> untriedMoves = node.getUntriedMoves(possibleMoves);
+                if(possibleMoves.isEmpty()||!untriedMoves.isEmpty())
+                    break;
+
+                node = node.UCBSelectChild(possibleMoves);
                 state.doMove(node.move);
             }
 

@@ -29,9 +29,9 @@ public class Node {
 
     public ArrayList<Card> getUntriedMoves(ArrayList<Card> legalMoves){
         ArrayList<Card> untried = new ArrayList<Card>();
-        for(Node child:this.childNodes){
-            if(!legalMoves.contains(child.move)){
-                untried.add(child.move);
+        for(Card move:legalMoves){
+            if(!this.childNodes.contains(move)){
+                untried.add(move);
             }
         }
 

@@ -13,6 +13,10 @@ public class Card {
         rank = rank<0 ? rank+10 : rank;
     }
 
+    public Card clone(){
+        return new Card(this.type,this.color);
+    }
+
     public String toString(){
         String name = "";
         switch(type){

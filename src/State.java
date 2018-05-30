@@ -30,22 +30,30 @@ public class State {
         roundWinner = new int[10];
         int [] order2 = {0, 1, 2, 3};
         order = order2;
-
-
-
     }
 
     public State clone(){//lahko malo optimiziramo, da ne dela vedno vseh vrednosti, ki jih pol samo povozi
         State clone = new State();
         clone.playerToMove = this.playerToMove;
+        clone.playerHands.clear();
         for(int i=0;i<4;i++){
-            clone.playerHands.set(i,new ArrayList(this.playerHands.get(i)));
+            clone.playerHands.add(new ArrayList<Card>());
+            for(Card c:this.playerHands.get(i))
+                clone.playerHands.get(i).add(c.clone());
             clone.order[i] = this.order[i];
         }
-        clone.discards = new ArrayList(discards);
+        clone.discards.clear();
+
+        for(Card c:this.discards)
+            clone.discards.add(c.clone());
+
         clone.currentColor = this.currentColor;
         clone.roundNo = this.roundNo;
-        clone.onTable = new ArrayList(this.onTable);
+
+        clone.onTable.clear();
+        for(Card c:this.onTable)
+            clone.onTable.add(c.clone());
+
         clone.roundWinner = this.roundWinner.clone();
         clone.random = this.random;
 
@@ -61,13 +69,15 @@ public class State {
 
         int receiver=playerToMove;
         for(int i=0;i<4;i++){
+            if(i==playerToMove)
+                continue;
             st.playerHands.get(i).clear();
         }
         for(int i=0;i<deck.size();i++){
             receiver=++receiver%4;
             if(receiver==playerToMove)
-                receiver++;
-            playerHands.get(receiver).add(deck.get(i));
+                receiver=(receiver+1)%4;
+            st.playerHands.get(receiver).add(deck.get(i));
         }
 
         return st;
@@ -76,6 +86,8 @@ public class State {
     public void doMove(Card playedCard){
         playerHands.get(playerToMove).remove(playedCard);
         onTable.add(playedCard);
+        if(currentColor=='N')
+            currentColor=playedCard.color;
         if(onTable.size()>3){
             int won = Rules.pickUp(this.onTable,order);
             order = Rules.changeOrder(order,onTable);
@@ -83,6 +95,8 @@ public class State {
             playerToMove = order[0];
             roundWinner[roundNo] = won;
             roundNo++;
+            discards.addAll(onTable);
+            onTable.clear();
         }else{
             playerToMove=(playerToMove+1)%4;
         }
