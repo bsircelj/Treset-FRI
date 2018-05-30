@@ -20,9 +20,10 @@ public class Treset {
 
             for(int j=0;j<4;j++) {
                 int prev = gameState.playerToMove;
-                System.out.print(prev+"\t");
-                gameState.doMove(player.get(gameState.playerToMove).nextCard(gameState));
-                System.out.println(gameState.onTable.get(prev));
+
+                Card move = player.get(gameState.playerToMove).nextCard(gameState);
+                System.out.print(prev+"\t"+move+"\n");
+                gameState.doMove(move);
             }
             System.out.println("\nNew turn:");
         }

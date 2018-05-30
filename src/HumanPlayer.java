@@ -24,10 +24,10 @@ public class HumanPlayer extends Player {
                 int choosenCard = sc.nextInt();
                 if(choosenCard<hand.size()&&choosenCard>=0){
                     one = state.playerHands.get(state.playerToMove).get(index);
-                    if(!possibleMoves.contains(one)){
+               /*     if(!possibleMoves.contains(one)){
                         System.out.println("Card's color doesn't match.");
                         continue;
-                    }
+                    }*/
                     ok=false;
                 }else{
                     System.out.println("No card with this id, try again:");
