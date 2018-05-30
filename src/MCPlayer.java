@@ -8,7 +8,7 @@ public class MCPlayer extends Player {
     }
 
     public Card nextCard(State state){
-        Card chosen = ISMCTS(state,1000);
+        Card chosen = ISMCTS(state,10);
         hand.remove(chosen);
         return chosen;
     }
@@ -22,8 +22,8 @@ public class MCPlayer extends Player {
 
         for(int iter=0;iter<itermax;iter++){
             Node node = rootnode;
-            //Random random = new Random();
-            Random random = new Random((long)1212993.500322);//Za testirat boljse, da vedno izbere isto vrednost, bomo ko vemo da dela na 'truly random' seed v zgornji vrstici
+
+            Random random = rootstate.random;
 
             //Determinize
             State state = rootstate.cloneAndRandomize();

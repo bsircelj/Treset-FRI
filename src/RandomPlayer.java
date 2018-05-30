@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class RandomPlayer extends Player {
 
@@ -6,10 +7,9 @@ public class RandomPlayer extends Player {
         super(id, hand);
     }
 
-    public Card nextCard(ArrayList<Card> previous,ArrayList<Card> table){
-        int index = (int)Math.random()*(hand.size());//@Alex popravi da barva
-        Card one = hand.get(index);
-        hand.remove(index);
-        return one;
+    public Card nextCard(State state){
+        Random random = state.random;
+        ArrayList<Card> moves = state.getMoves();
+        return moves.get(random.nextInt(moves.size()));
     }
 }

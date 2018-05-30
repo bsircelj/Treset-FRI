@@ -7,7 +7,7 @@ public class HumanPlayer extends Player {
     }
 
 
-    public Card nextCard(ArrayList<Card> previous,ArrayList<Card> table){
+    public Card nextCard(State state){
         System.out.print("In your hands are: ");
         int i=0;
         for(Card c:hand){
@@ -17,11 +17,17 @@ public class HumanPlayer extends Player {
         Scanner sc = new Scanner(System.in);
         int index=0;
         boolean ok = true;
+        ArrayList<Card> possibleMoves = state.getMoves();
+        Card one = null;
         while(ok){
             try{
                 int choosenCard = sc.nextInt();
-                if(choosenCard<hand.size()&&choosenCard>=0){//@Alex dodaj obvezno barvanje
-                    index=choosenCard;
+                if(choosenCard<hand.size()&&choosenCard>=0){
+                    one = state.playerHands.get(state.playerToMove).get(index);
+                    if(!possibleMoves.contains(one)){
+                        System.out.println("Card's color doesn't match.");
+                        continue;
+                    }
                     ok=false;
                 }else{
                     System.out.println("No card with this id, try again:");
@@ -32,7 +38,7 @@ public class HumanPlayer extends Player {
 
         }
 
-        Card one = hand.get(index);
+
         hand.remove(index);
         return one;
     }

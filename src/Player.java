@@ -14,7 +14,8 @@ public class Player {
        this.hand=hand;
    }
 
-    public Card nextCard(ArrayList<Card> previousRound, ArrayList<Card> onTable) {
-       return hand.get(0);//@Alex popravi da barva
+    public Card nextCard(State state) {
+       Card returned = state.getMoves().get(0);
+       return returned;
     }
 }

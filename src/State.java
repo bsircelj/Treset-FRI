@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class State {
     int playerToMove;
@@ -9,14 +10,20 @@ public class State {
     ArrayList<Card> onTable;
     int[] roundWinner;
     int [] order;
+    Random random;
 
     public State(){
         playerToMove = 0;
         discards = new ArrayList<Card>();//karte ki so bile igrane prej in niso vec v igri
         currentColor = 'N';//Brez barvanja -> miza je prazna
+
+        //random = new Random();
+        random = new Random((long)1212993.500322);//Za testirat boljse, da vedno izbere isto vrednost, ko bomo vedli da dela bomo dali na 'truly random' v zgornji vrstici
+        ArrayList<Card> deck = Rules.createDeck(random);
+
         playerHands = new ArrayList<ArrayList<Card>>();
         for(int i=0;i<4;i++){
-           playerHands.add(new ArrayList<Card>());
+           playerHands.add(Rules.deckPart(deck,i));
         }
         roundNo = 0;
         onTable = new ArrayList<Card>();
@@ -24,9 +31,11 @@ public class State {
         int [] order2 = {0, 1, 2, 3};
         order = order2;
 
+
+
     }
 
-    public State clone(){
+    public State clone(){//lahko malo optimiziramo, da ne dela vedno vseh vrednosti, ki jih pol samo povozi
         State clone = new State();
         clone.playerToMove = this.playerToMove;
         for(int i=0;i<4;i++){
@@ -38,13 +47,14 @@ public class State {
         clone.roundNo = this.roundNo;
         clone.onTable = new ArrayList(this.onTable);
         clone.roundWinner = this.roundWinner.clone();
+        clone.random = this.random;
 
         return clone;
     }
 
     public State cloneAndRandomize(){
         State st = this.clone();
-        ArrayList<Card> deck = Rules.createDeck();
+        ArrayList<Card> deck = Rules.createDeck(random);
         deck.removeAll(discards);
         deck.removeAll(onTable);
         deck.removeAll(playerHands.get(playerToMove));
@@ -67,7 +77,7 @@ public class State {
         playerHands.get(playerToMove).remove(playedCard);
         onTable.add(playedCard);
         if(onTable.size()>3){
-            int won = Rules.pickUp(this.onTable);
+            int won = Rules.pickUp(this.onTable,order);
             order = Rules.changeOrder(order,onTable);
             currentColor = 'N';
             playerToMove = order[0];
