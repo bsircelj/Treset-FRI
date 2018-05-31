@@ -13,7 +13,7 @@ public class Card {
         rank = rank<0 ? rank+10 : rank;
     }
 
-    public double Value(){
+    public double value(){
         double val = 0;
         switch(type){
             case 1: val = 1;
