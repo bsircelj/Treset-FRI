@@ -13,6 +13,33 @@ public class Card {
         rank = rank<0 ? rank+10 : rank;
     }
 
+    public double Value(){
+        double val = 0;
+        switch(type){
+            case 1: val = 1;
+                break;
+            case 2: val = 0.33;
+                break;
+            case 3: val = 0.33;
+                break;
+            case 4: val = 0;
+                break;
+            case 5: val = 0;
+                break;
+            case 6: val = 0;
+                break;
+            case 7: val = 0;
+                break;
+            case 8: val = 0.33;
+                break;
+            case 9: val = 0.33;
+                break;
+            case 10: val = 0.33;
+                break;
+        }
+        return val;
+    }
+
     public Card clone(){
         return new Card(this.type,this.color);
     }

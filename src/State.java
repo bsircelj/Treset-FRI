@@ -125,7 +125,7 @@ public class State {
         int which = State.pickUp(table, order);
         double score = 0;
         for (int i = 0; i < order.length; i++){
-            score += table.get(i).Value();
+            score += table.get(i).value();
         }
         return score;
     }
