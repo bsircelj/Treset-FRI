@@ -121,4 +121,13 @@ public class State {
         return 0;//@Alex dodaj tockovanje, to se klice samo na koncen state. 0 ce smo zgubili cene tocke, player je za koga stejemo tocke
     }
 
+    public double getScore(ArrayList<Card> table, int [] order){
+        int which = State.pickUp(table, order);
+        double score = 0;
+        for (int i = 0; i < order.length; i++){
+            score += table.get(i).Value();
+        }
+        return score;
+    }
+
 }
