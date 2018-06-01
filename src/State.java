@@ -121,13 +121,19 @@ public class State {
         return 0;//@Alex dodaj tockovanje, to se klice samo na koncen state. 0 ce smo zgubili cene tocke, player je za koga stejemo tocke
     }
 
-    public double getScore(ArrayList<Card> table, int [] order){
-        int which = State.pickUp(table, order);
+    public void assignScore(ArrayList<Card> table, int [] order){
+        int which = Rules.pickUp(table, order);
         double score = 0;
-        for (int i = 0; i < order.length; i++){
-            score += table.get(i).value();
+        for (Card i: table){
+            score += i.value();
         }
-        return score;
+
+        int coPlayer = (which + 2) % 4;
+        Treset.player.get(which).points += score;
+        Treset.player.get(coPlayer).points += score;
+
+
+
     }
 
 }

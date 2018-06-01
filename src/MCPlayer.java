@@ -3,12 +3,15 @@ import java.util.Random;
 
 public class MCPlayer extends Player {
 
+    boolean verbose;
+
     public MCPlayer(int id, ArrayList<Card> hand) {
         super(id, hand);
     }
 
+
     public Card nextCard(State state){
-        Card chosen = ISMCTS(state,10);
+        Card chosen = ISMCTS(state,10, true);
         hand.remove(chosen);
         return chosen;
     }
@@ -65,6 +68,7 @@ public class MCPlayer extends Player {
         }
         if(verbose){
             System.out.print(rootnode.treeToString(0));
+
         }else{
             System.out.print(rootnode.chilrenToString());
         }

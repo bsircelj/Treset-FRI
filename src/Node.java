@@ -92,11 +92,25 @@ public class Node {
     }
 
     public String chilrenToString(){
+
         String s = "";
-        for (int i =0;i < this.childNodes.size(); i++){
-            s += childNodes.get(i).toString() + "\n";
+        if (this.childNodes.isEmpty()){
+
+        }
+        else {
+            for (int i = 0; i < this.childNodes.size(); i++) {
+                s += childNodes.get(i).toString() + "\n";
+            }
         }
         return s;
+    }
+
+    public String toString(){
+        try {
+            return move.toString();
+        } catch (NullPointerException npe){
+            return "Root node";
+        }
     }
 
 
