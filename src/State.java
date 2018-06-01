@@ -117,21 +117,30 @@ public class State {
     }
 
     public int getResult(int player){
-
-        return 0;//@Alex dodaj tockovanje, to se klice samo na koncen state. 0 ce smo zgubili cene tocke, player je za koga stejemo tocke
+        if(Treset.player.get(player).points > 5) {
+            return 1;
+        } else
+            return 0;
     }
 
-    public void assignScore(ArrayList<Card> table, int [] order){
+    public void assignScore(ArrayList<Card> table, int [] order, int turn){
         int which = Rules.pickUp(table, order);
         double score = 0;
         for (Card i: table){
             score += i.value();
         }
-
         int coPlayer = (which + 2) % 4;
         Treset.player.get(which).points += score;
         Treset.player.get(coPlayer).points += score;
 
+        if(turn == 9){ //Če je zadnji turn, zaokroži dobljen rezultat navzdol in zadnjemu paru ki je pobral turn dodaj +1
+            int opponent1 = (which + 1) % 4;
+            int opponent2 = (which + 3) % 4;
+            Math.floor(Treset.player.get(which).points += 1);
+            Math.floor(Treset.player.get(coPlayer).points += 1);
+            Math.floor(Treset.player.get(opponent1).points);
+            Math.floor(Treset.player.get(opponent2).points);
+        }
 
 
     }

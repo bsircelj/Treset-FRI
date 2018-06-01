@@ -63,7 +63,7 @@ public class Node {
     }
 
     public Node addChild(Card move, int p){
-        Node n = new Node(move,this,p);
+        Node n = new Node(move,this, p);
         this.childNodes.add(n);
         return n;
     }
@@ -77,7 +77,12 @@ public class Node {
     public String treeToString(int indent){
         String s = this.indentString(indent) + this.toString();
         for (int i =0;i < this.childNodes.size(); i++){
-            s += childNodes.get(i).treeToString(indent + 1);
+            if (i == this.childNodes.size() - 1){
+                s += childNodes.get(i).treeToString(indent + 1);
+                s += "\n";
+            } else {
+                s += childNodes.get(i).treeToString(indent + 1);
+            }
         }
     return s;
 
@@ -94,14 +99,11 @@ public class Node {
     public String chilrenToString(){
 
         String s = "";
-        if (this.childNodes.isEmpty()){
 
+        for (int i = 0; i < this.childNodes.size(); i++) {
+            s += childNodes.get(i).toString() + "\n";
         }
-        else {
-            for (int i = 0; i < this.childNodes.size(); i++) {
-                s += childNodes.get(i).toString() + "\n";
-            }
-        }
+
         return s;
     }
 
