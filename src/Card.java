@@ -13,6 +13,12 @@ public class Card {
         rank = rank<0 ? rank+10 : rank;
     }
 
+    public boolean equals(Card that){
+        if(this.color==that.color&&this.type==that.type)
+            return true;
+        return false;
+    }
+
     public double value(){
         double val = 0;
         switch(type){

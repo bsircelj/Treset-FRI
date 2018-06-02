@@ -36,6 +36,8 @@ public class State {
         State clone = new State();
         clone.playerToMove = this.playerToMove;
         clone.playerHands.clear(); // Kaj ni naša želja obdržat hand od MCPlayerya?tukaj ga zbriše če prav štekam *******************************
+                                    //Pac finta je da, default konstruktor new State() nardi nov state, z random deckom in rokami. To samo zbrisemo. Ja je brezveze, lahko bi naredili en konstruktor
+                                    //ki naredi prazne spremenljivke oz en konstruktor samo za kopiranje samo se mi ni dalo.
         for(int i=0;i<4;i++){
             clone.playerHands.add(new ArrayList<Card>());
             for(Card c:this.playerHands.get(i))
@@ -63,9 +65,9 @@ public class State {
     public State cloneAndRandomize(){
         State st = this.clone();
         ArrayList<Card> deck = Rules.createDeck(random);
-        deck.removeAll(discards);
-        deck.removeAll(onTable); // Dejansko sploh ne remove-a ... Če greš s hroščkom čez bo pozneje imel deck enak size in imel v sebi karte ki so že igrane ***************************************
-        deck.removeAll(playerHands.get(playerToMove));
+        removeAll(deck,discards);
+        removeAll(deck,onTable); //Fixed
+        removeAll(deck,playerHands.get(playerToMove));
 
         int receiver=playerToMove;
         for(int i=0;i<4;i++){
@@ -81,6 +83,20 @@ public class State {
         }
 
         return st;
+    }
+
+    public static void removeAll(ArrayList<Card> deck, ArrayList<Card> removed){
+        for(Card remove:removed){
+            int i=0;
+            while(true){
+                if(i>=deck.size())
+                    break;
+                if(remove.equals(deck.get(i)))
+                    deck.remove(i);
+                else
+                    i++;
+            }
+        }
     }
 
 
