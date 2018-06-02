@@ -35,7 +35,7 @@ public class State {
     public State clone(){//lahko malo optimiziramo, da ne dela vedno vseh vrednosti, ki jih pol samo povozi
         State clone = new State();
         clone.playerToMove = this.playerToMove;
-        clone.playerHands.clear();
+        clone.playerHands.clear(); // Kaj ni naša želja obdržat hand od MCPlayerya?tukaj ga zbriše če prav štekam *******************************
         for(int i=0;i<4;i++){
             clone.playerHands.add(new ArrayList<Card>());
             for(Card c:this.playerHands.get(i))
@@ -64,7 +64,7 @@ public class State {
         State st = this.clone();
         ArrayList<Card> deck = Rules.createDeck(random);
         deck.removeAll(discards);
-        deck.removeAll(onTable);
+        deck.removeAll(onTable); // Dejansko sploh ne remove-a ... Če greš s hroščkom čez bo pozneje imel deck enak size in imel v sebi karte ki so že igrane ***************************************
         deck.removeAll(playerHands.get(playerToMove));
 
         int receiver=playerToMove;
@@ -82,6 +82,7 @@ public class State {
 
         return st;
     }
+
 
     public void doMove(Card playedCard){
         playerHands.get(playerToMove).remove(playedCard);

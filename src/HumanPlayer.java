@@ -23,7 +23,7 @@ public class HumanPlayer extends Player {
             try{
                 int choosenCard = sc.nextInt();
                 if(choosenCard<hand.size()&&choosenCard>=0){
-                    one = state.playerHands.get(state.playerToMove).get(index);
+                    one = state.playerHands.get(state.playerToMove).get(choosenCard);
                /*     if(!possibleMoves.contains(one)){
                         System.out.println("Card's color doesn't match.");
                         continue;

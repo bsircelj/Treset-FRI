@@ -20,11 +20,11 @@ public class Rules {
     }
 
     public static int pickUp(ArrayList<Card> table, int [] order){//Kdo pobira trenuno rundo
-        int which=0;                         //Vrne indeks zmagovalnega igralca
-        char firstColor = table.get(0).color;
+        int which=order[0];                         //Vrne indeks zmagovalnega igralca
+        char firstColor = table.get(which).color;
         for(int i=1;i<4;i++){
             if(table.get(i).color==firstColor)
-                if(table.get(i).rank>table.get(0).rank)
+                if(table.get(i).rank>table.get(which).rank)
                     which=order[i];
         }
         return which;
