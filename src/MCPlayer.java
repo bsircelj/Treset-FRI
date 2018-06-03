@@ -48,7 +48,8 @@ public class MCPlayer extends Player {
                 Card m = untriedMoves.get((random.nextInt(untriedMoves.size())));
                 int player = state.playerToMove;
                 state.doMove(m);
-                node = node.addChild(m,player);
+                untriedMoves.remove(m);
+                node = node.addChild(m,player); /////////////////
             }
 
             //Simulate

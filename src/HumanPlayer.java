@@ -37,9 +37,6 @@ public class HumanPlayer extends Player {
                }
 
         }
-
-
-        hand.remove(index);
         return one;
     }
 }

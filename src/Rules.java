@@ -38,8 +38,4 @@ public class Rules {
         }
         return newOrder;
     }
-
-
-
-
 }

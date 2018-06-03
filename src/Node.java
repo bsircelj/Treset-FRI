@@ -64,7 +64,8 @@ public class Node {
 
     public Node addChild(Card move, int p){
         Node n = new Node(move,this, p);
-        this.childNodes.add(n);
+        if (!this.childNodes.contains(n))
+            this.childNodes.add(n);
         return n;
     }
 

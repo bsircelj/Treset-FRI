@@ -91,8 +91,9 @@ public class State {
             while(true){
                 if(i>=deck.size())
                     break;
-                if(remove.equals(deck.get(i)))
+                if(remove.equals(deck.get(i))){
                     deck.remove(i);
+                    break;} //Kaj nebi blo smislno
                 else
                     i++;
             }
