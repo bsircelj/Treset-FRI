@@ -102,7 +102,7 @@ public class State {
 
 
     public void doMove(Card playedCard){
-        playerHands.get(playerToMove).remove(playedCard);
+        playerHands.get(playerToMove).remove(playedCard); // Z nekega razloga ne odstranjuje več kart od MCplayerja.
         onTable.add(playedCard);
         if(currentColor=='N')
             currentColor=playedCard.color;
@@ -110,6 +110,7 @@ public class State {
             int won = Rules.pickUp(this.onTable,order);
             order = Rules.changeOrder(order,onTable);
             currentColor = 'N';
+            assignScore(onTable, order, roundNo);
             playerToMove = order[0];
             roundWinner[roundNo] = won;
             roundNo++;
@@ -141,9 +142,9 @@ public class State {
             return 0;
     }
 
-    public void assignScore(ArrayList<Card> table, int [] order, int turn){
+    public static void assignScore(ArrayList<Card> table, int [] order, int turn){
         int which = Rules.pickUp(table, order);
-        double score = 0;
+        int score = 0;
         for (Card i: table){
             score += i.value();
         }
@@ -154,10 +155,12 @@ public class State {
         if(turn == 9){ //Če je zadnji turn, zaokroži dobljen rezultat navzdol in zadnjemu paru ki je pobral turn dodaj +1
             int opponent1 = (which + 1) % 4;
             int opponent2 = (which + 3) % 4;
-            Math.floor(Treset.player.get(which).points += 1);
-            Math.floor(Treset.player.get(coPlayer).points += 1);
-            Math.floor(Treset.player.get(opponent1).points);
-            Math.floor(Treset.player.get(opponent2).points);
+            Treset.player.get(which).points += 3;
+            Treset.player.get(coPlayer).points += 3;
+            Treset.player.get(which).points = Treset.player.get(which).points / 3;
+            Treset.player.get(coPlayer).points = Treset.player.get(coPlayer).points / 3;
+            Treset.player.get(opponent1).points = Treset.player.get(opponent1).points / 3;
+            Treset.player.get(opponent2).points = Treset.player.get(opponent2).points / 3;
         }
 
 
