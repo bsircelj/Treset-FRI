@@ -38,4 +38,24 @@ public class Rules {
         }
         return newOrder;
     }
+
+    public static void removeAll(ArrayList<Card> deck, ArrayList<Card> removed){
+        for(Card remove:removed){
+           remove(deck,remove);
+        }
+    }
+
+    public static void remove(ArrayList<Card> deck, Card removed){
+        int i = 0;
+        while(true){
+            if(i>=deck.size())
+                break;
+            if(removed.equals(deck.get(i))){
+                deck.remove(i);
+                break;} //Kaj nebi blo smislno
+            else
+                i++;
+        }
+    }
+
 }

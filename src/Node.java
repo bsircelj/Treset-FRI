@@ -30,7 +30,7 @@ public class Node {
     public ArrayList<Card> getUntriedMoves(ArrayList<Card> legalMoves){
         ArrayList<Card> untried = new ArrayList<Card>();
         for(Card move:legalMoves){
-            if(!this.childNodes.contains(move)){
+            if(!containsNode(this.childNodes,move)){
                 untried.add(move);
             }
         }
@@ -44,14 +44,14 @@ public class Node {
     public Node UCBSelectChild(ArrayList<Card> legalMoves, double exploration){
         ArrayList<Node> legalChildren = new ArrayList<Node>();
         for(Node child:this.childNodes){
-            if(legalMoves.contains(child.move)){
+            if(containsCard(legalMoves,child.move)){
                 legalChildren.add(child);
             }
         }
-        double score = 0;
+        double score = -1;
         Node maxChild = null;
         for(Node child:legalChildren){
-            double curScore = child.wins/child.visits + exploration*Math.sqrt(Math.log(child.avails)/child.visits);
+            double curScore = (double)child.wins/(double)child.visits + exploration*Math.sqrt(Math.log((double)child.avails)/(double)child.visits);
             if(curScore>score){
                 score=curScore;
                 maxChild=child;
@@ -64,7 +64,7 @@ public class Node {
 
     public Node addChild(Card move, int p){
         Node n = new Node(move,this, p);
-        if (!this.childNodes.contains(n))
+        if (!containsNode(childNodes,n))
             this.childNodes.add(n);
         return n;
     }
@@ -88,6 +88,7 @@ public class Node {
     return s;
 
     }
+
 
     public String indentString(int indent){
         String s = "\n";
@@ -114,6 +115,34 @@ public class Node {
         } catch (NullPointerException npe){
             return "Root node";
         }
+    }
+
+    public static boolean containsNode(ArrayList<Node> n, Card that){
+        for(Node all:n){
+            if(all.move.equals(that))
+                return true;
+        }
+        return false;
+    }
+
+    public static boolean containsNode(ArrayList<Node> n, Node that){
+        for(Node all:n){
+            if(all.equals(that))
+                return true;
+        }
+        return false;
+    }
+
+    public static boolean containsCard(ArrayList<Card> deck, Card that){
+        for(Card all:deck){
+            if(all.equals(that))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean equals(Node that){
+        return this.move.equals(that.move)&&this.playerJustMoved==that.playerJustMoved;
     }
 
 

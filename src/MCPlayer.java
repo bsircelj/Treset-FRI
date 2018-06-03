@@ -12,7 +12,7 @@ public class MCPlayer extends Player {
 
     public Card nextCard(State state){
         Card chosen = ISMCTS(state,10, true);
-        hand.remove(chosen);
+        Rules.remove(this.hand,chosen);
         return chosen;
     }
 
@@ -48,7 +48,7 @@ public class MCPlayer extends Player {
                 Card m = untriedMoves.get((random.nextInt(untriedMoves.size())));
                 int player = state.playerToMove;
                 state.doMove(m);
-                untriedMoves.remove(m);
+                Rules.remove(untriedMoves,m);
                 node = node.addChild(m,player); /////////////////
             }
 

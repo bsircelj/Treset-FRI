@@ -65,9 +65,9 @@ public class State {
     public State cloneAndRandomize(){
         State st = this.clone();
         ArrayList<Card> deck = Rules.createDeck(random);
-        removeAll(deck,discards);
-        removeAll(deck,onTable); //Fixed
-        removeAll(deck,playerHands.get(playerToMove));
+        Rules.removeAll(deck,discards);
+        Rules.removeAll(deck,onTable); //Fixed
+        Rules.removeAll(deck,playerHands.get(playerToMove));
 
         int receiver=playerToMove;
         for(int i=0;i<4;i++){
@@ -85,24 +85,12 @@ public class State {
         return st;
     }
 
-    public static void removeAll(ArrayList<Card> deck, ArrayList<Card> removed){
-        for(Card remove:removed){
-            int i=0;
-            while(true){
-                if(i>=deck.size())
-                    break;
-                if(remove.equals(deck.get(i))){
-                    deck.remove(i);
-                    break;} //Kaj nebi blo smislno
-                else
-                    i++;
-            }
-        }
-    }
+
 
 
     public void doMove(Card playedCard){
-        playerHands.get(playerToMove).remove(playedCard); // Z nekega razloga ne odstranjuje več kart od MCplayerja.
+        Rules.remove(playerHands.get(playerToMove),playedCard); //Sory pozabu da vse remove treba zamenjat z rocnimi. pac ko se kopira state se naredi nova spremenljicka
+                                                                // z novim id-jem in se ne smatra vec za isto in je ne najde vec in ne remova.
         onTable.add(playedCard);
         if(currentColor=='N')
             currentColor=playedCard.color;
