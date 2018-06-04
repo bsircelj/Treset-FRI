@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Player {
 
    ArrayList<Card> hand = new ArrayList<Card>();
-   double points;
+   int points;
    int id;  // od 0 do 3 bo vsak igralec meu id, 0-2 so skupaj in 1-3.
             // Potek igre gre od 0 do 3, in potem lahko s tem idjem oznacujemo kdo je na vrsti.
 

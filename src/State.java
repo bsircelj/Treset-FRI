@@ -10,6 +10,7 @@ public class State {
     ArrayList<Card> onTable;
     int[] roundWinner;
     int [] order;
+    int [] playerPoints;
     Random random;
 
     public State(){
@@ -22,9 +23,12 @@ public class State {
         ArrayList<Card> deck = Rules.createDeck(random);
 
         playerHands = new ArrayList<ArrayList<Card>>();
+        int [] playerPoints2 = {0, 0, 0, 0};
+        playerPoints = playerPoints2;
         for(int i=0;i<4;i++){
            playerHands.add(Rules.deckPart(deck,i));
         }
+
         roundNo = 0;
         onTable = new ArrayList<Card>();
         roundWinner = new int[10];
@@ -35,6 +39,7 @@ public class State {
     public State clone(){//lahko malo optimiziramo, da ne dela vedno vseh vrednosti, ki jih pol samo povozi
         State clone = new State();
         clone.playerToMove = this.playerToMove;
+        clone.playerPoints = this.playerPoints;
         clone.playerHands.clear(); // Kaj ni naša želja obdržat hand od MCPlayerya?tukaj ga zbriše če prav štekam *******************************
                                     //Pac finta je da, default konstruktor new State() nardi nov state, z random deckom in rokami. To samo zbrisemo. Ja je brezveze, lahko bi naredili en konstruktor
                                     //ki naredi prazne spremenljivke oz en konstruktor samo za kopiranje samo se mi ni dalo.
@@ -124,31 +129,33 @@ public class State {
     }
 
     public int getResult(int player){
-        if(Treset.player.get(player).points > 5) {
+
+        if(this.playerPoints[player] > 5) {
             return 1;
         } else
             return 0;
     }
 
-    public static void assignScore(ArrayList<Card> table, int [] order, int turn){
+    public void assignScore(ArrayList<Card> table, int [] order, int turn){
         int which = Rules.pickUp(table, order);
         int score = 0;
         for (Card i: table){
             score += i.value();
         }
         int coPlayer = (which + 2) % 4;
-        Treset.player.get(which).points += score;
-        Treset.player.get(coPlayer).points += score;
+        this.playerPoints[which] += score;
+        this.playerPoints[coPlayer] += score;
 
         if(turn == 9){ //Če je zadnji turn, zaokroži dobljen rezultat navzdol in zadnjemu paru ki je pobral turn dodaj +1
             int opponent1 = (which + 1) % 4;
             int opponent2 = (which + 3) % 4;
-            Treset.player.get(which).points += 3;
-            Treset.player.get(coPlayer).points += 3;
-            Treset.player.get(which).points = Treset.player.get(which).points / 3;
-            Treset.player.get(coPlayer).points = Treset.player.get(coPlayer).points / 3;
-            Treset.player.get(opponent1).points = Treset.player.get(opponent1).points / 3;
-            Treset.player.get(opponent2).points = Treset.player.get(opponent2).points / 3;
+
+            this.playerPoints[which] += 3;
+            this.playerPoints[coPlayer] += 3;
+            this.playerPoints[which] = this.playerPoints[which] / 3;
+            this.playerPoints[coPlayer] = this.playerPoints[coPlayer] / 3;
+            this.playerPoints[opponent1] = this.playerPoints[opponent1] / 3;
+            this.playerPoints[opponent2] = this.playerPoints[opponent2] / 3;
         }
 
 
