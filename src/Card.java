@@ -19,14 +19,14 @@ public class Card {
         return false;
     }
 
-    public int value(){
-        int val = 0;
+    public double value(){
+        double val = 0;
         switch(type){
-            case 1: val = 3;
+            case 1: val = 1;
                 break;
-            case 2: val = 1;
+            case 2: val = 0.34;
                 break;
-            case 3: val = 1;
+            case 3: val = 0.34;
                 break;
             case 4: val = 0;
                 break;
@@ -36,11 +36,11 @@ public class Card {
                 break;
             case 7: val = 0;
                 break;
-            case 8: val = 1;
+            case 8: val = 0.34;
                 break;
-            case 9: val = 1;
+            case 9: val = 0.34;
                 break;
-            case 10: val = 1;
+            case 10: val = 0.34;
                 break;
         }
         return val;

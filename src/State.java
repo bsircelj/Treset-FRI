@@ -10,7 +10,7 @@ public class State {
     ArrayList<Card> onTable;
     int[] roundWinner;
     int [] order;
-    int [] playerPoints;
+    double [] playerPoints;
     Random random;
 
     public State(){
@@ -23,7 +23,7 @@ public class State {
         ArrayList<Card> deck = Rules.createDeck(random);
 
         playerHands = new ArrayList<ArrayList<Card>>();
-        int [] playerPoints2 = {0, 0, 0, 0};
+        double [] playerPoints2 = {0, 0, 0, 0};
         playerPoints = playerPoints2;
         for(int i=0;i<4;i++){
            playerHands.add(Rules.deckPart(deck,i));
@@ -138,7 +138,7 @@ public class State {
 
     public void assignScore(ArrayList<Card> table, int [] order, int turn){
         int which = Rules.pickUp(table, order);
-        int score = 0;
+        double score = 0;
         for (Card i: table){
             score += i.value();
         }
@@ -150,12 +150,12 @@ public class State {
             int opponent1 = (which + 1) % 4;
             int opponent2 = (which + 3) % 4;
 
-            this.playerPoints[which] += 3;
-            this.playerPoints[coPlayer] += 3;
-            this.playerPoints[which] = this.playerPoints[which] / 3;
-            this.playerPoints[coPlayer] = this.playerPoints[coPlayer] / 3;
-            this.playerPoints[opponent1] = this.playerPoints[opponent1] / 3;
-            this.playerPoints[opponent2] = this.playerPoints[opponent2] / 3;
+            this.playerPoints[which] += 1;
+            this.playerPoints[coPlayer] += 1;
+            this.playerPoints[which] = Math.floor(this.playerPoints[which]);
+            this.playerPoints[coPlayer] = Math.floor(this.playerPoints[coPlayer]);
+            this.playerPoints[opponent1] = Math.floor(this.playerPoints[opponent1]);
+            this.playerPoints[opponent2] = Math.floor(this.playerPoints[opponent2]);
         }
 
 
