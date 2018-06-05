@@ -39,7 +39,6 @@ public class State {
     public State clone(){//lahko malo optimiziramo, da ne dela vedno vseh vrednosti, ki jih pol samo povozi
         State clone = new State();
         clone.playerToMove = this.playerToMove;
-        clone.playerPoints = this.playerPoints;
         clone.playerHands.clear(); // Kaj ni naša želja obdržat hand od MCPlayerya?tukaj ga zbriše če prav štekam *******************************
                                     //Pac finta je da, default konstruktor new State() nardi nov state, z random deckom in rokami. To samo zbrisemo. Ja je brezveze, lahko bi naredili en konstruktor
                                     //ki naredi prazne spremenljivke oz en konstruktor samo za kopiranje samo se mi ni dalo.
@@ -48,6 +47,7 @@ public class State {
             for(Card c:this.playerHands.get(i))
                 clone.playerHands.get(i).add(c.clone());
             clone.order[i] = this.order[i];
+            clone.playerPoints[i] = this.playerPoints[i];
         }
         clone.discards.clear();
 
@@ -101,9 +101,9 @@ public class State {
             currentColor=playedCard.color;
         if(onTable.size()>3){
             int won = Rules.pickUp(this.onTable,order);
-            order = Rules.changeOrder(order,onTable);
             currentColor = 'N';
             assignScore(onTable, order, roundNo);
+            order = Rules.changeOrder(order,onTable);
             playerToMove = order[0];
             roundWinner[roundNo] = won;
             roundNo++;

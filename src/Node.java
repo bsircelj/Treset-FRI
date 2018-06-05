@@ -40,6 +40,9 @@ public class Node {
     public Node UCBSelectChild(ArrayList<Card> legalMoves){
         return UCBSelectChild(legalMoves,0.7);
     }
+    public double UCBSGet(){
+        return (double)this.wins/(double)this.visits + 0.7*Math.sqrt(Math.log((double)this.avails)/(double)this.visits);
+    }
 
     public Node UCBSelectChild(ArrayList<Card> legalMoves, double exploration){
         ArrayList<Node> legalChildren = new ArrayList<Node>();
@@ -92,7 +95,10 @@ public class Node {
 
     public String indentString(int indent){
         String s = "\n";
+
         for(int i =0; i < indent + 1; i++){
+            if(i==0)
+                s+='\t';
             s += "| ";
         }
         return s;
@@ -100,7 +106,7 @@ public class Node {
 
     public String chilrenToString(){
 
-        String s = "";
+        String s = "\n";
 
         for (int i = 0; i < this.childNodes.size(); i++) {
             s += childNodes.get(i).toString() + "\n";
@@ -111,7 +117,7 @@ public class Node {
 
     public String toString(){
         try {
-            return move.toString();
+            return move.toString()+String.format(" %.10f",this.UCBSGet());
         } catch (NullPointerException npe){
             return "Root node";
         }

@@ -11,7 +11,14 @@ public class MCPlayer extends Player {
 
 
     public Card nextCard(State state){
-        Card chosen = ISMCTS(state,10, true);
+        int i=0;
+        System.out.print("\tMC player:"+id+"\n\t");
+        for(Card c:hand){
+            System.out.print("[" + i++ + "] " + c + ", ");
+        }
+        System.out.println();
+
+        Card chosen = ISMCTS(state,10000, false);
         Rules.remove(this.hand,chosen);
         return chosen;
     }
