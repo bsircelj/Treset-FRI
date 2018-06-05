@@ -108,6 +108,12 @@ public class ColorPrint {
         System.out.print(RED + message + RESET);
     }
 
+    //debug card
+    public static void winner( String message) {
+        System.out.print(GREEN + message + RESET);
+    }
+
+
     public static void hand(char color, String message) {
 
         switch (color) {

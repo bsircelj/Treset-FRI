@@ -4,6 +4,8 @@ import java.util.Random;
 public class MCPlayer extends Player {
 
     boolean verbose;
+    boolean printOn = false;
+    boolean coloring = true;
 
     public MCPlayer(int id, ArrayList<Card> hand) {
         super(id, hand);
@@ -11,22 +13,24 @@ public class MCPlayer extends Player {
 
 
     public Card nextCard(State state){
-        int i=0;
-        System.out.print("Missing colors: ");
-        for (int j = 0; j < 4; j++){
-            System.out.print("\n["+j+"] ");
-            for (char c:state.missingColor.get(i))
-                System.out.print(c+" ");
+        printOn=state.printOn;
+        if(printOn) {
+            int i = 0;
+            System.out.print("Missing colors: ");
+            for (int j = 0; j < 4; j++) {
+                System.out.print("\n[" + j + "] ");
+                for (char c : state.missingColor.get(j))
+                    System.out.print(c + " ");
 
+            }
+            System.out.print("\n\tMC player:" + id + "\n\t");
+            for (Card c : hand) {
+                String msg = "[" + i++ + "] " + c + ", ";
+                ColorPrint.hand(c.color, msg);
+            }
+            System.out.println();
         }
-        System.out.print("\n\tMC player:"+id+"\n\t");
-        for(Card c:hand){
-            String msg = "[" + i++ + "] " + c + ", ";
-            ColorPrint.hand(c.color, msg);
-        }
-        System.out.println();
-
-        Card chosen = ISMCTS(state,2000, true);
+        Card chosen = ISMCTS(state,200, false);
         Rules.remove(this.hand,chosen);
         return chosen;
     }
@@ -43,6 +47,7 @@ public class MCPlayer extends Player {
         int i=0;
         while(true){
             if(System.currentTimeMillis()-startTime>itermax)
+           // if(i>1000)
                 break;
                 i++;
             Node node = rootnode;
@@ -50,7 +55,7 @@ public class MCPlayer extends Player {
             Random random = rootstate.random;
 
             //Determinize
-            State state = rootstate.cloneAndRandomize();
+            State state = rootstate.cloneAndRandomize(coloring);
 
             //Select
             while(true){
@@ -88,7 +93,9 @@ public class MCPlayer extends Player {
             }
 
         }
+        if(printOn)
         System.out.println("iterations: "+i);
+        if(printOn)
         if(verbose){
             ColorPrint.tree(rootnode.treeToString(0));
 

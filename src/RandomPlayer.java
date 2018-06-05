@@ -7,14 +7,18 @@ public class RandomPlayer extends Player {
         super(id, hand);
     }
 
+    boolean printOn = false;
     public Card nextCard(State state){
-        int i=0;
-        System.out.print("\n\tRandom player:"+id+"\n\t");
-        for(Card c:hand){
-            String msg = "[" + i++ + "] " + c + ", ";
-            ColorPrint.hand(c.color, msg);
+        printOn=state.printOn;
+        if(printOn) {
+            int i = 0;
+            System.out.print("\n\tRandom player:" + id + "\n\t");
+            for (Card c : hand) {
+                String msg = "[" + i++ + "] " + c + ", ";
+                ColorPrint.hand(c.color, msg);
+            }
+            System.out.println();
         }
-        System.out.println();
         Random random = state.random;
         ArrayList<Card> moves = state.getMoves();
         return moves.get(random.nextInt(moves.size()));

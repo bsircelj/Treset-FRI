@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class State {
@@ -13,14 +14,16 @@ public class State {
     double [] playerPoints;
     Random random;
     ArrayList<ArrayList<Character>> missingColor;
+    boolean printOn;
 
-    public State(){
+    public State(boolean print){
+        printOn=print;
         playerToMove = 0;
         discards = new ArrayList<Card>();//karte ki so bile igrane prej in niso vec v igri
         currentColor = 'N';//Brez barvanja -> miza je prazna
 
-        //random = new Random();
-        random = new Random((long)1212993.500322);//Za testirat boljse, da vedno izbere isto vrednost, ko bomo vedli da dela bomo dali na 'truly random' v zgornji vrstici
+        random = new Random();
+       // random = new Random((long)1212993.500322);//Za testirat boljse, da vedno izbere isto vrednost, ko bomo vedli da dela bomo dali na 'truly random' v zgornji vrstici
         ArrayList<Card> deck = Rules.createDeck(random);
 
         playerHands = new ArrayList<ArrayList<Card>>();
@@ -41,7 +44,7 @@ public class State {
     }
 
     public State clone(){//lahko malo optimiziramo, da ne dela vedno vseh vrednosti, ki jih pol samo povozi
-        State clone = new State();
+        State clone = new State(this.printOn);
         clone.playerToMove = this.playerToMove;
         clone.playerHands.clear();
         clone.missingColor.clear();
@@ -75,7 +78,7 @@ public class State {
         return clone;
     }
 
-    public State cloneAndRandomize(){
+    public State cloneAndRandomize(boolean coloring){
         State st = this.clone();
         ArrayList<Card> deck = Rules.createDeck(random);
         Rules.removeAll(deck,discards);
@@ -89,33 +92,76 @@ public class State {
             st.playerHands.get(i).clear();
         }
         int [] howMany ={0,0,0,0};
+        int [] howManyClone={0,0,0,0};
         for(int i=0;i<deck.size();i++){
             receiver=++receiver%4;
             if(receiver==playerToMove)
                 receiver=(receiver+1)%4;
             howMany[receiver]++;
+            howManyClone[receiver]++;
         }
+        boolean coloringFailed = !coloring;
         for(int i=0;i<4;i++){
             int index=0;
             while(deck.size()>0&&howMany[i]>0){
+                if(index>=deck.size()){
+                    coloringFailed = true;
+                    break;
+                }
                 if(!containsChar(missingColor.get(i),deck.get(index).color)){
                     st.playerHands.get(i).add(deck.get(index));
                     howMany[i]--;
+                    deck.remove(index);
                 }else{
                     index++;
                 }
             }
+            if(coloringFailed)
+                break;
+            Collections.shuffle(deck,random);
         }
 
+        if(coloringFailed) {
+            ArrayList<Card> deck2 = Rules.createDeck(random);
+            Rules.removeAll(deck,discards);
+            Rules.removeAll(deck,onTable);
+            Rules.removeAll(deck,playerHands.get(playerToMove));
+
+            for(int i=0;i<4;i++){
+                if(i==playerToMove)
+                    continue;
+                st.playerHands.get(i).clear();
+            }
+
+            int index = 0;
+            for (int i = 0; i < 4; i++) {
+                while(howManyClone[i]-->0)
+                    st.playerHands.get(i).add(deck2.get(index++));
+            }
+        }
+
+
+
         return st;
+    }
+
+    public int winner(){
+        if(playerPoints[0]>playerPoints[1])
+            return 0;
+        return 1;
     }
 
 
 
 
     public void doMove(Card playedCard){
-        if(currentColor!='N'&&playedCard.color!=currentColor&&!missingColor.get(playerToMove).contains(currentColor))
-            missingColor.get(playerToMove).add(currentColor);
+        if(currentColor!='N'){
+            if(playedCard.color!=currentColor){
+                if(!containsChar(missingColor.get(playerToMove),currentColor)){
+                    missingColor.get(playerToMove).add(currentColor);
+                }
+            }
+        }
         Rules.remove(playerHands.get(playerToMove),playedCard);
         onTable.add(playedCard);
         if(currentColor=='N')
