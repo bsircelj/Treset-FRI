@@ -12,11 +12,12 @@ public class MCPlayer extends Player {
 
     public Card nextCard(State state){
         int i=0;
+        System.out.print("Missing colors: ");
         for (int j = 0; j < 4; j++){
-            for (int k = 0; k < 4; k++) {
-                if ()
-                state.missingColor.get(j).get(k)
-            }
+            System.out.print("\n["+j+"] ");
+            for (char c:state.missingColor.get(i))
+                System.out.print(c+" ");
+
         }
         System.out.print("\tMC player:"+id+"\n\t");
         for(Card c:hand){
