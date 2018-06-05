@@ -12,13 +12,20 @@ public class MCPlayer extends Player {
 
     public Card nextCard(State state){
         int i=0;
+        for (int j = 0; j < 4; j++){
+            for (int k = 0; k < 4; k++) {
+                if ()
+                state.missingColor.get(j).get(k)
+            }
+        }
         System.out.print("\tMC player:"+id+"\n\t");
         for(Card c:hand){
-            System.out.print("[" + i++ + "] " + c + ", ");
+            String msg = "[" + i++ + "] " + c + ", ";
+            ColorPrint.hand(msg);
         }
         System.out.println();
 
-        Card chosen = ISMCTS(state,2000, false);
+        Card chosen = ISMCTS(state,2000, true);
         Rules.remove(this.hand,chosen);
         return chosen;
     }
@@ -82,10 +89,10 @@ public class MCPlayer extends Player {
         }
         System.out.println("iterations: "+i);
         if(verbose){
-            System.out.print(rootnode.treeToString(0));
+            ColorPrint.tree(rootnode.treeToString(0));
 
         }else{
-            System.out.print(rootnode.chilrenToString());
+            ColorPrint.tree(rootnode.chilrenToString());
         }
         Node result = rootnode.childNodes.get(0);
         for(Node all:rootnode.childNodes){

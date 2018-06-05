@@ -11,7 +11,8 @@ public class RandomPlayer extends Player {
         int i=0;
         System.out.print("\tRandom player:"+id+"\n\t");
         for(Card c:hand){
-            System.out.print("[" + i++ + "] " + c + ", ");
+            String msg = "[" + i++ + "] " + c + ", ";
+            ColorPrint.hand(msg);
         }
         System.out.println();
         Random random = state.random;

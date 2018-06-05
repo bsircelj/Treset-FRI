@@ -11,7 +11,8 @@ public class HumanPlayer extends Player {
         System.out.print("In your hands are: ");
         int i=0;
         for(Card c:hand){
-            System.out.print("[" + i++ + "] " + c + ", ");
+            String msg = "[" + i++ + "] " + c + ", ";
+            ColorPrint.hand(msg);
         }
         System.out.print("\nWrite card index to play it:");
         Scanner sc = new Scanner(System.in);

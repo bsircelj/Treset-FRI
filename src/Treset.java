@@ -24,14 +24,17 @@ public class Treset {
                 int prev = gameState.playerToMove;
 
                 Card move = player.get(gameState.playerToMove).nextCard(gameState);
-                System.out.print("\n"+prev+"\t"+move+"\n\n");
+                String msg = "\n"+prev+"\t"+move+"\n\n";
+                ColorPrint.played(msg);
                 gameState.doMove(move);
             }
             System.out.println();
             for(int k=0;k<4;k++){
-                System.out.println(" ["+k+"] "+gameState.playerPoints[k]);
+                String msg = " ["+k+"] "+gameState.playerPoints[k];
+                ColorPrint.score(msg);
             }
-            System.out.println("\n\n______________________________\nNew turn:");
+            String msg = "\n\n______________________________\nNew turn:";
+            ColorPrint.turn(msg);
         }
 
     }
