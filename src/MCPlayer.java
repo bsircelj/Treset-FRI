@@ -18,7 +18,7 @@ public class MCPlayer extends Player {
         }
         System.out.println();
 
-        Card chosen = ISMCTS(state,10000, false);
+        Card chosen = ISMCTS(state,2000, false);
         Rules.remove(this.hand,chosen);
         return chosen;
     }
@@ -30,7 +30,13 @@ public class MCPlayer extends Player {
     public Card ISMCTS(State rootstate, int itermax, boolean verbose){
         Node rootnode = new Node();
 
-        for(int iter=0;iter<itermax;iter++){
+        //for(int iter=0;iter<itermax;iter++){
+        long startTime = System.currentTimeMillis();
+        int i=0;
+        while(true){
+            if(System.currentTimeMillis()-startTime>itermax)
+                break;
+                i++;
             Node node = rootnode;
 
             Random random = rootstate.random;
@@ -74,6 +80,7 @@ public class MCPlayer extends Player {
             }
 
         }
+        System.out.println("iterations: "+i);
         if(verbose){
             System.out.print(rootnode.treeToString(0));
 

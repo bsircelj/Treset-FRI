@@ -12,6 +12,7 @@ public class State {
     int [] order;
     double [] playerPoints;
     Random random;
+    ArrayList<ArrayList<Character>> missingColor;
 
     public State(){
         playerToMove = 0;
@@ -25,8 +26,10 @@ public class State {
         playerHands = new ArrayList<ArrayList<Card>>();
         double [] playerPoints2 = {0, 0, 0, 0};
         playerPoints = playerPoints2;
+        missingColor = new ArrayList<>();
         for(int i=0;i<4;i++){
            playerHands.add(Rules.deckPart(deck,i));
+           missingColor.add(new ArrayList<Character>());
         }
 
         roundNo = 0;
@@ -34,20 +37,25 @@ public class State {
         roundWinner = new int[10];
         int [] order2 = {0, 1, 2, 3};
         order = order2;
+
     }
 
     public State clone(){//lahko malo optimiziramo, da ne dela vedno vseh vrednosti, ki jih pol samo povozi
         State clone = new State();
         clone.playerToMove = this.playerToMove;
-        clone.playerHands.clear(); // Kaj ni naša želja obdržat hand od MCPlayerya?tukaj ga zbriše če prav štekam *******************************
-                                    //Pac finta je da, default konstruktor new State() nardi nov state, z random deckom in rokami. To samo zbrisemo. Ja je brezveze, lahko bi naredili en konstruktor
-                                    //ki naredi prazne spremenljivke oz en konstruktor samo za kopiranje samo se mi ni dalo.
+        clone.playerHands.clear();
+        clone.missingColor.clear();
         for(int i=0;i<4;i++){
             clone.playerHands.add(new ArrayList<Card>());
             for(Card c:this.playerHands.get(i))
                 clone.playerHands.get(i).add(c.clone());
             clone.order[i] = this.order[i];
             clone.playerPoints[i] = this.playerPoints[i];
+
+
+            clone.missingColor.add(new ArrayList<Character>());
+            for(Character c:this.missingColor.get(i))
+                clone.missingColor.get(i).add(c.charValue());
         }
         clone.discards.clear();
 
@@ -71,7 +79,7 @@ public class State {
         State st = this.clone();
         ArrayList<Card> deck = Rules.createDeck(random);
         Rules.removeAll(deck,discards);
-        Rules.removeAll(deck,onTable); //Fixed
+        Rules.removeAll(deck,onTable);
         Rules.removeAll(deck,playerHands.get(playerToMove));
 
         int receiver=playerToMove;
@@ -80,11 +88,23 @@ public class State {
                 continue;
             st.playerHands.get(i).clear();
         }
+        int [] howMany ={0,0,0,0};
         for(int i=0;i<deck.size();i++){
             receiver=++receiver%4;
             if(receiver==playerToMove)
                 receiver=(receiver+1)%4;
-            st.playerHands.get(receiver).add(deck.get(i));
+            howMany[receiver]++;
+        }
+        for(int i=0;i<4;i++){
+            int index=0;
+            while(deck.size()>0&&howMany[i]>0){
+                if(!containsChar(missingColor.get(i),deck.get(index).color)){
+                    st.playerHands.get(i).add(deck.get(index));
+                    howMany[i]--;
+                }else{
+                    index++;
+                }
+            }
         }
 
         return st;
@@ -94,8 +114,9 @@ public class State {
 
 
     public void doMove(Card playedCard){
-        Rules.remove(playerHands.get(playerToMove),playedCard); //Sory pozabu da vse remove treba zamenjat z rocnimi. pac ko se kopira state se naredi nova spremenljicka
-                                                                // z novim id-jem in se ne smatra vec za isto in je ne najde vec in ne remova.
+        if(currentColor!='N'&&playedCard.color!=currentColor&&!missingColor.get(playerToMove).contains(currentColor))
+            missingColor.get(playerToMove).add(currentColor);
+        Rules.remove(playerHands.get(playerToMove),playedCard);
         onTable.add(playedCard);
         if(currentColor=='N')
             currentColor=playedCard.color;
@@ -159,6 +180,14 @@ public class State {
         }
 
 
+    }
+
+    public boolean containsChar(ArrayList<Character> colors, char c){
+        for(char each:colors){
+            if(each==c)
+                return true;
+        }
+        return false;
     }
 
 }
