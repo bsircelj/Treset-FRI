@@ -9,10 +9,10 @@ public class RandomPlayer extends Player {
 
     public Card nextCard(State state){
         int i=0;
-        System.out.print("\tRandom player:"+id+"\n\t");
+        System.out.print("\n\tRandom player:"+id+"\n\t");
         for(Card c:hand){
             String msg = "[" + i++ + "] " + c + ", ";
-            ColorPrint.hand(msg);
+            ColorPrint.hand(c.color, msg);
         }
         System.out.println();
         Random random = state.random;

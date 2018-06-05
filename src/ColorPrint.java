@@ -78,11 +78,6 @@ public class ColorPrint {
         System.out.println(RED + message + RESET);
     }
 
-    //hand
-    public static void hand(String message) {
-        System.out.print(CYAN + message + RESET);
-    }
-
     //hand new line
     public static void handln(String message) {
         System.out.println(CYAN + message + RESET);
@@ -109,8 +104,26 @@ public class ColorPrint {
     }
 
     //debug card
-    public static void debug( String message) {
+    public static void debug(char color, String message) {
         System.out.print(RED + message + RESET);
+    }
+
+    public static void hand(char color, String message) {
+
+        switch (color) {
+            case 'S':
+                System.out.print(WHITE + message + RESET);
+                break;
+            case 'B':
+                System.out.print(RED + message + RESET);
+                break;
+            case 'C':
+                System.out.print(BLUE + message + RESET);
+                break;
+            case 'D':
+                System.out.print(YELLOW + message + RESET);
+                break;
+        }
     }
 
 

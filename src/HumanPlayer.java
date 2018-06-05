@@ -8,11 +8,11 @@ public class HumanPlayer extends Player {
 
 
     public Card nextCard(State state){
-        System.out.print("In your hands are: ");
+        System.out.print("\nIn your hands are: ");
         int i=0;
         for(Card c:hand){
             String msg = "[" + i++ + "] " + c + ", ";
-            ColorPrint.hand(msg);
+            ColorPrint.hand(c.color, msg);
         }
         System.out.print("\nWrite card index to play it:");
         Scanner sc = new Scanner(System.in);

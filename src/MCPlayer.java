@@ -19,10 +19,10 @@ public class MCPlayer extends Player {
                 System.out.print(c+" ");
 
         }
-        System.out.print("\tMC player:"+id+"\n\t");
+        System.out.print("\n\tMC player:"+id+"\n\t");
         for(Card c:hand){
             String msg = "[" + i++ + "] " + c + ", ";
-            ColorPrint.hand(msg);
+            ColorPrint.hand(c.color, msg);
         }
         System.out.println();
 
