@@ -8,7 +8,12 @@ public class HumanPlayer extends Player {
 
 
     public Card nextCard(State state){
-        System.out.print("\nIn your hands are: ");
+
+        System.out.println("On table:");
+        for(int i=0;i<state.onTable.size();i++){
+            ColorPrint.hand(state.onTable.get(i).color,"id: ["+state.order[i]+"]  "+state.onTable.get(i)+"\n");
+        }
+        System.out.print("["+state.playerToMove+"]\nIn your hands are: ");
         int i=0;
         for(Card c:hand){
             String msg = "[" + i++ + "] " + c + ", ";

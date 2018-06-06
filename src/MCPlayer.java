@@ -6,14 +6,17 @@ public class MCPlayer extends Player {
     boolean verbose;
     boolean printOn = false;
     boolean coloring = true;
+    int iter;
 
-    public MCPlayer(int id, ArrayList<Card> hand) {
+    public MCPlayer(int id, ArrayList<Card> hand,boolean coloring,int iter) {
         super(id, hand);
+        this.coloring = coloring;
+        this.iter = iter;
     }
-
 
     public Card nextCard(State state){
         printOn=state.printOn;
+        printOn=false;
         if(printOn) {
             int i = 0;
             System.out.print("Missing colors: ");
@@ -30,7 +33,7 @@ public class MCPlayer extends Player {
             }
             System.out.println();
         }
-        Card chosen = ISMCTS(state,200, false);
+        Card chosen = ISMCTS(state,this.iter, false);
         Rules.remove(this.hand,chosen);
         return chosen;
     }
